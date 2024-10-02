@@ -15,13 +15,7 @@ function CalcularIPCAcumulado(periodos){
     }
     valoresconsalto = valores.join("\n")
     alert ("Se han ingresado los valores: "+valoresconsalto)
-
-
-
-
-
     let acumulado = 0
-
     for (let i = 0; i < valores.length; i++) {
         if (i == 0){
             acumulado = valores[i] +1
@@ -33,9 +27,13 @@ function CalcularIPCAcumulado(periodos){
     }
     acumulado = (acumulado * 100) - 100
     acumulado = acumulado.toFixed(2)
-    return acumulado;
+    return {acumulado, valores};
 }
-
+function obtenerValorMaximoYIndice(valores) {
+    const valorMaximo = Math.max(...valores); // encuantra valor máximo
+    const indice = valores.indexOf(valorMaximo); // índice del máximo
+    return { valorMaximo, indice };
+}
 
 
 let periodo = prompt("Desea calcular el acumulado en años(A) o meses(M)");
@@ -52,6 +50,12 @@ if (isNaN(nperiodos)) {
     }
     while (isNaN(nperiodos))
 }
-let IPCAcumulado = CalcularIPCAcumulado(nperiodos)
+const retorno = CalcularIPCAcumulado(nperiodos)
+const IPCAcumulado =retorno.acumulado
+const valores = retorno.valores
+const reporte = obtenerValorMaximoYIndice(valores)
+const valorMaximo = reporte.valorMaximo
+const indiceMaximo = reporte.indice + 1
 alert("El IPC acumulado es: " + IPCAcumulado + "%")
+alert("El " +periodo+ " con mayor aumento de precios fue el numero: "+indiceMaximo+ " con el valor " +valorMaximo)
 
